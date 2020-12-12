@@ -5,12 +5,15 @@ s = None
 
 
 def VivodIgrovovoPolya():
-    global a
-
-    print('-' * 13)
-    for i in range(0, 9, 3):
-        print('|', a[i] + ' | ' + a[i + 1] + ' | ' + a[i + 2], '|')
+    global a, d, play
+    if d == []:
+        print('ничья')
+        play = False
+    else:
         print('-' * 13)
+        for i in range(0, 9, 3):
+            print('|', a[i] + ' | ' + a[i + 1] + ' | ' + a[i + 2], '|')
+            print('-' * 13)
 
 
 def polya():
@@ -24,11 +27,16 @@ def polya():
 
 def vin(user, i):
     global a, d, s, play
+    if play == False:
+        print('________________')
+        VivodIgrovovoPolya()
+        print('___ничья___')
+        return play
     if a[0] == a[1] == a[2] == i:
         play = False
     elif a[3] == a[4] == a[5] == i:
         play = False
-    elif a[6] == a[6] == a[8] == i:
+    elif a[6] == a[7] == a[8] == i:
         play = False
     elif a[0] == a[3] == a[6] == i:
         play = False
@@ -56,6 +64,8 @@ def hod_O(f):
     global a, d, s, play
     polya()
     VivodIgrovovoPolya()
+    if play == False:
+        return print('________игра завершена')
     print('свободные поля под номерами: {0}'.format(d))
     f = int(input('игрок Нолик |O|, введите номер поля:'))
     # проверка на коректность игрового поля
@@ -63,8 +73,7 @@ def hod_O(f):
 
     a[f] = 'O'
     vin('нолик', i='O')
-    if play == False:
-        return print('________игра завершена')
+
     hod_X(s)
 
 
@@ -72,14 +81,15 @@ def hod_X(f):
     global a, d, s, play
     polya()
     VivodIgrovovoPolya()
+    if play == False:
+        return print('________игра завершена')
     print('свободные поля под номерами: {0}'.format(d))
     f = int(input('игрок Крестик |X|, введите номер поля:'))
     f = vvodnubmer(f, d)
 
     a[f] = 'X'
     vin('крестик', i='X')
-    if play == False:
-        return print('________игра завершена')
+
     hod_O(s)
 
 
